@@ -35,8 +35,10 @@
             <img src="{% static 'assets/img/profile-img.jpg' %}" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
           </a><!-- End Profile Iamge Icon -->
-
+          
+          
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            
             <li class="dropdown-header">
               <h6>Kevin Anderson</h6>
               <span>Web Designer</span>
@@ -44,7 +46,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-person"></i>
@@ -54,7 +56,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            
             <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
@@ -64,7 +66,7 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            
             <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
@@ -74,13 +76,20 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
+                <span>
+                <form action="{% url 'authentication:logout' %}" method="POST">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm btn-block">Sign Out</button>
+                </form>
+              </span>
               </a>
             </li>
+         
+            
+            
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->

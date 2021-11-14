@@ -1,7 +1,8 @@
 import os
 import environ
 from pathlib import Path
-import django_heroku
+
+from django.contrib import messages 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'expenses',
     'authentication',
+    'settings',
 ]
 
 MIDDLEWARE = [
@@ -69,12 +71,15 @@ WSGI_APPLICATION = 'student_portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE':'django.db.backends.postgresql',
-        'NAME': env('NAME'),
-        'USER':env('USER'),
-        'PASSWORD':env('PASSWORD'),
-        'HOST':env('HOST'),
+        'NAME': env('DB_NAME'),
+        'USER':env('DB_USER'),
+        'PASSWORD':env('DB_PASSWORD'),
+        'HOST':env('DB_HOST'),
         
     }
+}
+MESSAGE_TAGS = {
+    messages.ERROR:'danger'
 }
 
 
@@ -122,5 +127,14 @@ STATIC_ROOT = os.path.join(BASE_DIR,'collectstatic')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_PORT = env('EMAIL_PORT')
 
-django_heroku.settings(locals())
+
+LOGIN_URL = 'authentication:login'
+LOGIN_REDIRECT_URL = 'authentication:home'
+
+

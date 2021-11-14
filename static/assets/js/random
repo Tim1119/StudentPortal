@@ -1,0 +1,17 @@
+
+    $(document).on('submit', '#userSettingsForm', function (e) {
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: {
+                "currency": $('#inputGroupSelect').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            }
+        }),
+        success(function (msg) {
+                console.log(msg);
+            }),
+            error(function (msg) {
+                console.log(msg)
+            })
+        })
