@@ -10,10 +10,7 @@ from django.http import JsonResponse
 
 # Create your views here.
 def settingsView(request):
-    try:
-        user_preferences= UserPreferences.objects.get(user=request.user)
-    except UserPreferences.DoesNotExist:
-        pass
+    user_preferences= UserPreferences.objects.get(user=request.user)
     currency_data = [] 
     file_path = os.path.join(settings.BASE_DIR,'currencies.json')
     

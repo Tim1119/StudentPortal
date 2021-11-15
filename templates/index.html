@@ -2,6 +2,15 @@
 {% block content %}
 
 
-{% endblock content %}
+<div class="pagetitle">
+    <h1>Home</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
+            <li class="breadcrumb-item active"> Settings </li>
+        </ol>
+    </nav>
+</div><!-- End Page Title -->
+{% include 'partials/_messages.html' %}
 
-  
+{% endblock content %}

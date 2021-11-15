@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Student Portal {% block title %}|Home{% endblock title %}</title>
+  <title>Student Portal | {% block title %}Home{% endblock title %}</title>
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
@@ -38,16 +38,8 @@
   {% include 'partials/_sidebar.html' %}
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>{% block sidebartitle %}Dashboard{% endblock sidebartitle %}</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
-          <li class="breadcrumb-item active"> {% block sidebar %}Dashboard{% endblock sidebar %} </li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-    {% include 'partials/_messages.html' %}
+    
+   
      {% block content %}{% endblock content %}
   </main>
 

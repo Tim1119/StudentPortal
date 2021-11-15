@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Update expenses
+{% endblock title %}
+{% block content %}
+<style>
+    .nav-add-action {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<div class="pagetitle">
+
+    <nav class="nav-add-action">
+        <div >
+            <h1>Update Income</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
+                <li class="breadcrumb-item active">Update Expense </li>
+            </ol>
+        </div>
+        <div class="add-action-div">
+            <form action="{% url 'income:delete-income' income.slug %}" method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit" >Delete</button>
+            </form>
+        </div>
+    </nav>
+</div><!-- End Page Title -->
+{% include 'partials/_messages.html' %}
+<form class="form-group" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <div class="mt-3 text-center">
+        <button type="submit" class="btn button-background">Update Income</button>
+    </div>
+</form>
+
+
+
+
+{% endblock content %}

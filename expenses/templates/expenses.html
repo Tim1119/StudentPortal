@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Expenses
+{% endblock title %}
+{% block content %}
+<style>
+    .nav-add-action {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .step-links {
+        display: flex;
+    }
+</style>
+
+<div class="pagetitle">
+
+    <nav class="nav-add-action">
+        <div>
+            <h1>Expenses</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
+                <li class="breadcrumb-item active"> Expenses</li>
+            </ol>
+        </div>
+        <div>
+            <a class="btn button-background" href="{% url 'expenses:add-expenses' %}">Add Expense</a>
+        </div>
+
+    </nav>
+    <div>
+        {% include 'partials/_messages.html' %}
+    </div>
+    <div class="container row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <form action="" class="form-group">
+                <input type="text" class="form-control" id="searchField" placeholder="Search by Category">
+            </form>
+        </div>
+    </div>
+    <!-- Table output to be displayed from django -->
+    <div id="app-table">
+        {% if expenses %}
+        <table class="table table-stripped table-hover">
+
+            <thead>
+                <th></th>
+                <th>Description</th>
+                <th>Category</th>
+                {% if currency.currency %}
+                <th>Amount ({{currency.currency}}) </th>
+                {% else %}
+                <th>Amount</th>
+                {% endif %}
+                <th>Date</th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for expense in expenses  %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{expense.description|capfirst }}</td>
+                    <td>{{expense.category.name|capfirst }}</td>
+                    <td>{{expense.amount|floatformat:"2g" }}</td>
+                    <td>{{expense.expense_date}}</td>
+
+                    <td>
+                        <a href="{% url 'expenses:update-expense' expense.slug %}"
+                            class="btn btn-sm btn-outline-success">Edit</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% endif %}
+    </div>
+    <!--div that shows when search is not found-->
+    <div id="search-not-found">
+        
+    </div>
+    <!--Table output to be displayed when search is found using ajax -->
+    <div  class="d-none mt-3"  id="table-ouput">
+        <div id="random-search" ></div>
+        <table class="table table-stripped table-hover">
+
+            <thead>
+                <th>Description</th>
+                <th>Amount (Currency)</th>
+                <th>Date</th>
+            </thead>
+            <tbody id="table-body">
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+    {% if expenses %}
+    <div class="pagination mt-4" id="pagination">
+        <div>
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+        </div>
+        <div>
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a href="?page=1" class="page-link active">1</a></li>
+                <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">Previous</a>
+                </li>
+                {% endif %}
+                {% if page_obj.has_next %}
+                <li class="page-item"><a href="?page={{ page_obj.next_page_number }}" class="page-link">Next</a>
+                </li>
+                <li class="page-item"><a href="?page={{ page_obj.paginator.num_pages }}"
+                        class="page-link">{{ page_obj.paginator.num_pages }}</a>
+                </li>
+                {% endif %}
+            </span>
+        </div>
+    </div>
+    {% endif %}
+
+
+</div>
+
+</div><!-- End Page Title -->
+
+
+
+
+{% block scripts %}
+<script src="{% static 'assets/js/searchexpense.js' %}"></script>
+{% endblock scripts %}
+
+{% endblock content %}
