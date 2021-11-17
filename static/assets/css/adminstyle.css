@@ -1,0 +1,29 @@
+body{
+    font-family:"Nunito", sans-serif;
+}
+#header{
+    background-color:#016070 !important;
+}
+caption{
+    background-color:#016070 !important;
+}
+#head{
+    color:#fff !important;
+}
+#user-tools{
+    font-size: 12px;
+}
+div.breadcrumbs{
+    background-color:#01879e ;
+}
+.login .submit-row input{
+    width: 100%;
+    background-color:#016070;
+   
+    text-align: center
+}
+.submit-row input{
+    background-color:#016070 !important;
+   
+    text-align: center
+}

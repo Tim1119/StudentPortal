@@ -28,13 +28,14 @@
                  
                    
                     {% include "partials/_messages.html" %}
-                    {{form}}
+                    {{form.as_p}}
                     
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a href="{% url 'authentication:register' %}">Create an account</a></p>
+                      <p class="small mb-0  text-center">Don't have account? <a href="{% url 'authentication:register' %}">Create an account</a></p>
+                      <p class="small mb-0  text-center">Forgotten Password? <a href="{% url 'authentication:reset-password' %}">Reset Password</a></p>
                     </div>
                   </form>
 

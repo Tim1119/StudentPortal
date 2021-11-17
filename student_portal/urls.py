@@ -10,6 +10,7 @@ urlpatterns = [
     path('accounts/',include('authentication.urls',namespace='authentication')),
     path('settings/',include('settings.urls',namespace='settings')),
     path('income/',include('income.urls',namespace='income')),
+    path('profile/',include('profiles.urls',namespace='profile')),
 ]
 urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
 urlpatterns+= static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

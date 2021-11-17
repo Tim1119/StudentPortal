@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.decorators.http import require_http_methods
 from settings.models import UserPreferences
+import datetime
 # Create your views here.
   
 class ExpenseView(LoginRequiredMixin,ListView):
@@ -71,6 +72,11 @@ def SearchExpenses(request):
     return JsonResponse(list(data), safe=False)
     
     
-
+def expense_category_summary(request):
+    todays_date = datetime.date.today()
+    six_months_ago = todays_date - datetime.timedelta(days=180)
+    expenses = Expense.objects.filter(date__gte=six_months_ago,expense_date_lte = todays_date)
+    finalrep = {}
     
-    
+    def get_category(expense):
+        return expense.category

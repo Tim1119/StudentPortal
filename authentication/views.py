@@ -1,33 +1,32 @@
-from django.core.mail import message
+from django.core.mail import EmailMessage, message
 from django.shortcuts import render,redirect
 from django.views.generic import CreateView,View
-from .forms import LoginUserForm
+from .forms import LoginUserForm, RegisterForm,ResetPasswordForm,CompleteResetPasswordForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse_lazy,reverse
-from django.contrib.auth import logout
-from .forms import LoginForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
-from django.core.mail import EmailMessage
 from .utils import token_generator
 from django.views.decorators.cache import cache_control
-from django.utils.encoding import force_bytes,force_text,DjangoUnicodeDecodeError
+from django.utils.encoding import force_bytes,force_text
 from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+import pdb
 # Create your views here.
 
 
 class RegisterUserView(CreateView):
 
-    form_class=LoginForm 
+    form_class=RegisterForm 
     template_name = 'registration/register.html'
     success_url = reverse_lazy('authentication:login') 
 
     def post(self,request):
         #print(request.POST)
-        form = LoginForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
@@ -125,4 +124,79 @@ class VerificationView(View):
                 return redirect('authenticatin:login')
         except Exception as e:
             pass
-        return redirect('authentication:login')
+        return redirect('authentication:login') 
+
+class RequestPasswordResetView(View):
+    
+    def get(self,request):
+        form = ResetPasswordForm()
+        return render(request,'registration/reset-password.html',context={'form':form})
+    
+    def post(self,request):
+        form = ResetPasswordForm(request.POST or None)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            current_site = get_current_site(request) 
+            user = User.objects.filter(email=email)
+            print(('------'))
+            print(user)
+            print(user)
+            print(('------'))
+            if user.exists():
+        # get our current site and relative url 
+                uidb64 = urlsafe_base64_encode(force_bytes(user[0].pk))
+
+                domain = get_current_site(request).domain
+                link = reverse('authentication:reset-user-password',kwargs={'uidb64':uidb64,'token':PasswordResetTokenGenerator().make_token(user[0])})
+
+
+                email_subject = 'Password Reset'
+
+                reset_url = 'http://'+domain+link
+                email_body = 'Hi ' + user[0].username +' please use this link to reset your password\n' + reset_url
+                send_email = EmailMessage(email_subject,email_body,'noreply@semycolon.com',[email])
+                send_email.send()
+                messages.success(request,'we have sent a link to reset your password to your mail')
+                return redirect('authentication:login')
+            
+        else:
+            messages.error(request,'your email is invalid or not registered')
+            return redirect('authentication:reset-password')
+        
+class CompletePasswordReset(View):
+    
+    def get(self,request,uidb64,token):
+        context={
+            'uidb64':uidb64,
+            'token':token,
+            'form':CompleteResetPasswordForm()
+        }
+        return render(request,'registration/set-new-password.html',context) 
+    
+    def post(self,request,uidb64,token):
+        context={
+            'uidb64':uidb64,
+            'token':token,
+            'form':CompleteResetPasswordForm()
+        }
+        form = CompleteResetPasswordForm(request.POST or None)
+        if form.is_valid():
+            password1 = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']
+            try:
+                user_id = force_text(urlsafe_base64_decode(uidb64))
+                user = User.objects.get(id=user_id)
+                user.set_password(password1)
+                user.save()
+            
+                messages.success(request,'Passsword reset successful')
+                return redirect('authentication:login')
+            except Exception as e:
+                pdb.set_trace()
+                messages.error(request,'Something went wrong,try again')
+                return render(request,'registration/set-new-password.html',context) 
+        else:
+            messages.error(request,'sorry, an error occurred, check and fill the form appropriately')
+            return render(request,'registration/set-new-password.html',context) 
+            
+       

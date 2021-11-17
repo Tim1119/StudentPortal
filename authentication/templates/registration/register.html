@@ -32,7 +32,9 @@
                                 <form class="row g-3" method="POST" action="{% url 'authentication:register' %}">
                                     {% csrf_token %}
                                     {{form.as_p}}
-
+                                    <div class="col-12 text-left">
+                                        <p id="showpasswordtoggle">Show Pasword</p>
+                                    </div>
                                     <div class="col-12">
                                         <button class="btn btn-primary w-100" type="submit" id="submitbtn">Create
                                             Account</button>
@@ -56,5 +58,5 @@
 
     </div>
 </main><!-- End #main -->
-
+<script src="{% static 'assets/js/view_password.js' %}"></script>
 {% endblock content %}

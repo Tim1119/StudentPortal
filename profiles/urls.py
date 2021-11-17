@@ -5,6 +5,6 @@ app_name = 'profile'
 
 urlpatterns = [
     
-    path('update-profile/<slug>/',ProfileUpdateView.as_view(),name='update-profile'),
+    path('update-profile/<slug>/',ProfileUpdateView.as_view(),name='view-update-profile'),
     
 ]
