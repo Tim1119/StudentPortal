@@ -100,7 +100,6 @@ class DeleteIncomeView(LoginRequiredMixin,DeleteView):
 @require_http_methods('POST')
 def SearchIncome(request):
     search_str = json.loads(request.body).get('searchText') 
-    
     money_source = Source.objects.filter(name__icontains=search_str)
     expenses = Income.objects.filter(source__in=money_source,owner=request.user)
     data = expenses.values()

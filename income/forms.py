@@ -8,6 +8,7 @@ class IncomeForm(ModelForm):
         model = Income
         fields = ['description','amount','income_date','source']
         
+        
     def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
             

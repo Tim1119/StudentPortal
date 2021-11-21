@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-Notes
+Course
 {% endblock title %}
 {% block content %}
 <style>
@@ -24,88 +24,73 @@ Notes
 
     <nav class="nav-add-action">
         <div>
-            <h1>Note</h1>
+            <h1>Add Course</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
-                <li class="breadcrumb-item active"> Note</li>
+                <li class="breadcrumb-item active">Add Course</li>
             </ol>
         </div>
         <div>
-            <a class="btn button-background" href="{% url 'notes:create-note' %}">Create Note</a>
+            <a class="btn button-background" href="{% url 'notes:create-course' %}">Add Course</a>
         </div>
 
     </nav>
     <div>
         {% include 'partials/_messages.html' %}
     </div>
-     {% if all_notes %}
-    <div class="container row mt-1 mb-1">
-        <div class="col-md-8">
-        </div>
-        <div class="col-md-4">
-            <form action="" class="form-group">
-                <input type="text" class="form-control" id="searchField" placeholder="Search for Note by Title">
-            </form>
-        </div>
-    </div>
-    {% endif %}
     <!-- Table output to be displayed from django -->
     <div id="app-table">
-        {% if all_notes %}
+
+        {% if courses %}
         <table class="table table-stripped table-hover">
 
             <thead>
-                <th></th>
-                <th>Title</th>
-                <th>Description</th>
+                <th>S/N</th>
                 <th>Course Name</th>
-                <th>Note Order</th>               
-                <th></th>
+                <th>Created</th>
+                <th>Action</th>
+                <th>Action</th>
             </thead>
             <tbody>
-                {% for note in all_notes  %}
+                {% for course in courses  %}
                 <tr>
                     <td>{{forloop.counter}}</td>
-                    <td><a href="{% url 'notes:note-detail' note.slug %}">{{note.title|capfirst }}</a></td>
-                    <td>{{note.description|capfirst }}</td>
-
-                     {% if note.course.name %}
-                    <td>{{note.course.name|capfirst }}</td>
-                    {% else %}
-                     <td>Not Available</td>
-                    {% endif %}
-
-                     {% if note.note_order %}
-                    <td>{{note.note_order}}</td>
-                    {% else %}
-                      <td>Not Available</td>
-                      {% endif %}
-
+                    <td>{{course.name|capfirst }}</td>
+                    <td>{{course.created|date:"D d M Y" }}</td>
                     <td>
-                        <a href="{% url 'notes:update-note' note.slug %}"
+                        <a href="{% url 'notes:update-course' course.slug %}"
                             class="btn btn-sm btn-outline-success">Edit</a>
+                    </td>
+                    <td>
+                        <form action="{% url 'notes:delete-course' course.slug %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-sm btn-outline-danger" type="submit">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <div class="alert alert-info" role="alert">
+            You have no course available. Please create one
+        </div>
         {% endif %}
     </div>
     <!--Div that shows when ajax result is not found-->
     <div id="search-not-found">
-        
+
     </div>
     <!--Table output to be displayed when search is found using ajax -->
-    <div  class="d-none mt-3"  id="table-ouput">
-        <div id="random-search" ></div>
+    <div class="d-none mt-3" id="table-ouput">
+        <div id="random-search"></div>
         <table class="table table-stripped table-hover">
 
             <thead>
-                <th>Title</th>
                 <th>Description</th>
-                <th></th>
+                <th>Amount (Currency)</th>
+                <th>Date</th>
 
-                
             </thead>
             <tbody id="table-body">
 
@@ -115,7 +100,7 @@ Notes
     </div>
 
 
-    {% if all_notes %}
+    {% if income_sources %}
     <div class="pagination mt-4" id="pagination">
         <div>
             <span class="current">
@@ -150,8 +135,5 @@ Notes
 
 
 
-{% block scripts %}
-<script src="{% static 'assets/js/search-note.js' %}"></script>
-{% endblock scripts %}
 
 {% endblock content %}

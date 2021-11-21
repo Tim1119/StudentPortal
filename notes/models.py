@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from autoslug import AutoSlugField
 from profiles.models import Profile
 from ckeditor.fields import RichTextField
+from django.core.exceptions import ValidationError
+
+
+
 
 class Course(models.Model):
     name = models.CharField(max_length=20)
@@ -15,10 +19,16 @@ class Course(models.Model):
         verbose_name = 'Course'
         verbose_name_plural = 'Course'
         ordering = ['-created']
+        unique_together = ('name','owner')
     
     def __str__(self):
         return str(self.name) 
 
+    def validate_unique(self,exclude=None):
+        try:
+            super(Note,self).validate_unique()
+        except ValidationError as e:
+            raise ValidationError("Oops, course with this title belogning to you already exists")
     
 
 
@@ -38,3 +48,10 @@ class Note(models.Model):
     
     class Meta:
         ordering = ['-created']
+        unique_together = ('title','course','profile')
+        
+    def validate_unique(self,exclude=None):
+        try:
+            super(Note,self).validate_unique()
+        except ValidationError as e:
+            raise ValidationError("Oops, note with this title,in this course, belonging to you already exists")
