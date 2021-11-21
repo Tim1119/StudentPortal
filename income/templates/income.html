@@ -27,7 +27,7 @@ Income
             <h1>Income</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
-                <li class="breadcrumb-item active"> Income {{income_sources}}</li>
+                <li class="breadcrumb-item active"> Income</li>
             </ol>
         </div>
         <div>
@@ -38,14 +38,19 @@ Income
     <div>
         {% include 'partials/_messages.html' %}
     </div>
-    <div class="container row">
-        <div class="col-md-8"></div>
+     {% if income_sources %}
+    <div class="container row mt-3 mb-3">
+        <div class="col-md-8">
+         <a href="{% url 'income:export-pdf' %}" class="btn btn-primary btn-sm">Export to PDF</a>
+            <a href="{% url 'income:export-csv' %}" class="btn btn-secondary btn-sm">Export to CSV</a>
+        </div>
         <div class="col-md-4">
             <form action="" class="form-group">
                 <input type="text" class="form-control" id="searchField" placeholder="Search Income by Source">
             </form>
         </div>
     </div>
+    {% endif %}
     <!-- Table output to be displayed from django -->
     <div id="app-table">
         {% if income_sources %}

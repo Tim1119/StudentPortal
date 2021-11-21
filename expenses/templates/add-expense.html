@@ -3,8 +3,17 @@
 {% block title %}
   Add expenses
 {% endblock title %}
-{% block content %}
 
+{% block content %}
+<style>
+    .errorlist{
+        margin-bottom:4px;
+        padding: 0px;
+        list-style-type:none;
+        font-weight: 500;
+        color: red;
+      }
+</style>
 
     <div class="pagetitle">
         <h1>Add Expense</h1>
@@ -16,6 +25,7 @@
         </nav>
     </div><!-- End Page Title -->
     {% include 'partials/_messages.html' %}
+    
     <form action="{% url 'expenses:add-expenses' %}" class="form-group" method="POST" >
         {% csrf_token %}
         {{form.as_p}}

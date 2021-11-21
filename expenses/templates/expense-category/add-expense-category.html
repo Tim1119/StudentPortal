@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Add Expense Category
+{% endblock title %}
+{% block content %}
+
+<style>
+    .errorlist{
+        margin-bottom:4px;
+        padding: 0px;
+        list-style-type:none;
+        font-weight: 500;
+        color: red;
+      }
+</style>
+
+    <div class="pagetitle">
+        <h1>Add Expense Category </h1>
+        <nav >
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
+                <li class="breadcrumb-item active">Add Income Source</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    {% include 'partials/_messages.html' %}
+    <form action="{% url 'income:add-income-source' %}" class="form-group" method="POST" >
+        {% csrf_token %}
+        {{form.as_p}}
+       <div class="mt-3 text-center">
+        <button type="submit" class="btn button-background">Add Income Source</button>
+       </div>
+    </form>
+    
+
+
+{% endblock content %}
+
+

@@ -46,16 +46,15 @@ const searchFunction = function(e){
         .then((data) => {
             appTable.classList.add('d-none')
             searchNotFound.classList.remove('d-none')
-            searchNotFound.classList.add('block')
-            console.log(data)              
+            searchNotFound.classList.add('block')       
                if (data.length==0){
                    tableOutput.classList.add('d-none')
                    pagination.classList.add('d-none')
-                    searchNotFound.innerHTML = `<p class=mt-5>'No result found'</p>`
+                   // searchNotFound.innerHTML = `<p class=mt-5>'No result found'</p>`
                }else{
                    searchNotFound.classList.add('d-none')
                    tableOutput.classList.remove('d-none')
-                   suggestedSearch.innerHTML =` <p>Result matching ${searchValue} category</p>`
+                   suggestedSearch.innerHTML =` <p>Result matching ${searchValue} sources</p>`
                    data.forEach((item) => {
                          
                     tableBody.innerHTML += `
@@ -74,6 +73,7 @@ const searchFunction = function(e){
         appTable.classList.remove('d-none')
             tableOutput.classList.add('d-none')
             pagination.classList.remove('d-none')
+           
     }
 }
 

@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses File PDF View</title>
+
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/expenses-download-as-pdf.js' %}"></script>
+    <script src="{% static 'assets/js/html2pdf.bundle.min.js' %}"></script>
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/pdf-output.css' %}" rel="stylesheet">
+</head>
+
+<body >
+    
+
+    <div id="card" >
+        <div class="card-body" >
+            
+        <div class="container" >
+
+
+
+            <!-- Table output to be displayed from django -->
+            <div class="logo-div">
+                <div class="logo-text">
+                    <h1> Student-Portal</h1>
+                </div>
+                <div class="logo-image container">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="" class="img-fluid">
+                </div>
+    
+            </div>
+        </div>
+        <div class="text-center fs1 fw-bold mb-4 text-decoration-underline">
+            <h4>Expenses incured by {{request.user.last_name|capfirst}} {{request.user.first_name|capfirst}}</h4>
+        </div>
+        <div id="app-table" class="container">
+            {% if expenses %}
+            <table class="table table-bordered border-dark">
+    
+                <thead>
+                    <th></th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    {% if currency.currency %}
+                    <th>Amount ({{currency.currency}}) </th>
+                    {% else %}
+                    <th>Amount</th>
+                    {% endif %}
+                    <th>Date</th>
+    
+                </thead>
+                <tbody>
+                    {% for expense in expenses  %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{expense.description|capfirst }}</td>
+                        <td>{{expense.category.name|capfirst }}</td>
+                        <td>{{expense.amount|floatformat:"2g" }}</td>
+                        <td>{{expense.expense_date}}</td>
+    
+    
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    
+            {% endif %}
+        </div>
+
+        </div>
+    
+    </div>
+    <div class="container btn-div">
+        <button type="button" class="btn btn-success d-block" id="download-btn">Download as Pdf</button>
+    </div>
+    <script>
+        user = "{{request.user.username}}"
+    </script>
+
+
+
+
+
+
+
+
+</body>
+
+</html>

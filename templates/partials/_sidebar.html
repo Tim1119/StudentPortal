@@ -22,9 +22,43 @@
         <a class="nav-link " href="{% url 'income:income' %}">
           <i class="bi bi-file-plus"></i>
           <span>Income</span>
+        </a> 
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'notes:all-notes' %}">
+          <i class="bi bi-file-plus"></i>
+          <span>Notes</span>
         </a>
       
       </li>
+      <li class="nav-heading">Summary</li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'income:income-summary' %}">
+          <i class="bi bi-file-plus"></i>
+          <span>Income Summary</span>
+        </a>
+      
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'expenses:expense-summary' %}">
+          <i class="bi bi-file-plus"></i>
+          <span>Expense Summary</span>
+        </a>
+      
+      </li>
+      <li class="nav-heading">Add Income Sources/ Expense Category</li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'income:sources' %}">
+            <i class="bi bi-coin"></i>
+            <span>Income Sources</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'expenses:expense-categories' %}">
+            <i class="bi bi-cone"></i>
+            <span>Expense Category</span>
+          </a>
+        </li>
       <li class="nav-heading">User Settings</li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'settings:settings' %}">

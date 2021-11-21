@@ -46,8 +46,7 @@ const searchFunction = function(e){
         .then((data) => {
             appTable.classList.add('d-none')
             searchNotFound.classList.remove('d-none')
-            searchNotFound.classList.add('block')
-            console.log(data)              
+            searchNotFound.classList.add('block')         
                if (data.length==0){
                    tableOutput.classList.add('d-none')
                    pagination.classList.add('d-none')

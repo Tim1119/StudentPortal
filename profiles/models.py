@@ -40,4 +40,3 @@ class Profile(models.Model):
         verbose_name = 'Profile'
         verbose_name_plural = 'Profile'
     
-   

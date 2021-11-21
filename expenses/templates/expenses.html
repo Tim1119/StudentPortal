@@ -38,14 +38,20 @@ Expenses
     <div>
         {% include 'partials/_messages.html' %}
     </div>
-    <div class="container row">
-        <div class="col-md-8"></div>
+    {% if expenses %}
+    <div class="container row mt-4 mb-4">
+        <div class="col-md-8">
+            <a href="{% url 'expenses:export-pdf' %}" class="btn btn-primary btn-sm">Export to PDF</a>
+            <a href="{% url 'expenses:export-csv' %}" class="btn btn-secondary btn-sm">Export to CSV</a>
+          
+        </div>
         <div class="col-md-4">
             <form action="" class="form-group">
                 <input type="text" class="form-control" id="searchField" placeholder="Search by Category">
             </form>
         </div>
     </div>
+    {% endif %}
     <!-- Table output to be displayed from django -->
     <div id="app-table">
         {% if expenses %}
