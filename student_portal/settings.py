@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'income',
     'profiles',
     'notes',
+    'todo',
 ]
 
 MIDDLEWARE = [

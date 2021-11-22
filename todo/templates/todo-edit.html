@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
- Edit Note
+ Edit Todo
 {% endblock title %}
 {% block content %}
 
@@ -25,24 +25,20 @@
             <h1>Update Note</h1>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
-                <li class="breadcrumb-item active">Update Note </li>
+                <li class="breadcrumb-item active">Update Todo</li>
             </ol>
         </div>
         <div class="add-action-div">
-            <form action="{% url 'notes:delete-note' note.slug %}" method="POST">
-                {% csrf_token %}
-                <button class="btn btn-danger" type="submit" >Delete</button>
-            </form>
+           
         </div>
         </nav>
     </div><!-- End Page Title -->
     {% include 'partials/_messages.html' %}
-    <form action="{% url 'notes:update-note' note.slug %}" class="form-group" method="POST" >
+    <form  class="form-group" method="POST" >
         {% csrf_token %}
         {{form.as_p}}
-        {{form.media}}
        <div class="mt-3 text-center">
-        <button type="submit" class="btn button-background">UYpdate Note</button>
+        <button type="submit" class="btn button-background">Update Todo</button>
        </div>
     </form>
     

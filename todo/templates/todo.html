@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Todo
+{% endblock title %}
+{% block content %}
+
+<style>
+    .errorlist {
+        margin-bottom: 4px;
+        padding: 0px;
+        list-style-type: none;
+        font-weight: 500;
+        color: red;
+    }
+    form{
+        margin-right: 3px !important;
+    }
+
+    .nav-add-action {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+
+<div class="pagetitle">
+    <nav class="nav-add-action">
+        <div>
+            <h1>Todo</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
+                <li class="breadcrumb-item active">Todo</li>
+            </ol>
+        </div>
+        <div class="add-action-div">
+
+        </div>
+    </nav>
+</div><!-- End Page Title -->
+{% include 'partials/_messages.html' %}
+<div class="card">
+
+    <div class="card-body">
+        <div class="container mt-4">
+            <form action="{% url 'todo:create-todo' %}" class="form-group" method="POST" style="display: flex;">
+                {% csrf_token %}
+                {{form.task}}
+                <div class="text-center">
+                    <button type="submit" class="btn button-background btn-lg">+</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container mt-4">
+            {% if all_todos %}
+
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    {% for todo in all_todos  %}
+                    <div class="list-group-item" style="display: flex;justify-content:space-between;align-items:center;">
+                        {% if todo.completed %}
+                        <div class="text-decoration-line-through" style="display: flex;justify-content:space-between;align-items:center;font-size:small;"> 
+                            {{todo.task}}
+                        </div>
+                        {% else %}
+                        <div style="display: flex;justify-content:space-between;align-items:center;font-size:small;"> 
+                            {{todo.task}}
+                        </div>
+                        {% endif %}
+                        
+                        <div>
+                            <div style="display: flex;justify-content:space-around;">
+                                <form action="{% url 'todo:update-todo' todo.slug %}" class="form-group" method="POST"
+                                    style="display: flex;height:inherit;">
+                                    {% csrf_token %}
+                                    {% if todo.completed %}
+                                    <button class="btn btn-danger btn-sm">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                    {% else %}
+                                    <button class="btn btn-primary btn-sm">
+                                        <i class="bi bi-check-lg"></i>
+                                    </button>
+                                    {% endif %}
+                                </form>
+                                <form action="{% url 'todo:edit-todo' todo.slug %}" class="form-group" method="GET"
+                                    style="display: flex;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-success btn-sm"><i class="bi bi-pen"></i></button>
+                                </form>
+                                <form action="{% url 'todo:delete-todo' todo.slug %}" class="form-group" method="POST"
+                                    style="display: flex;">
+                                    {% csrf_token %}
+                                    <button class="btn btn-secondary btn-sm"><i class="bi bi-x-octagon-fill"></i></button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            {% else %}
+            <div class="alert alert-info" role="alert">
+                No todo item available create one
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

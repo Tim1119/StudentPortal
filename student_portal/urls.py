@@ -12,6 +12,7 @@ urlpatterns = [
     path('income/',include('income.urls',namespace='income')),
     path('profile/',include('profiles.urls',namespace='profile')),
     path('notes/',include('notes.urls',namespace='notes')),
+    path('todo/',include('todo.urls',namespace='todo')),
 ]
 urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
 urlpatterns+= static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)
