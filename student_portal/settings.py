@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'profiles',
     'notes',
     'todo',
+    'youtube',
+    'books',
+    'wiki',
+    'dictionary',
 ]
 
 MIDDLEWARE = [

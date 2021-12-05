@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Dictionary
+{% endblock title %}
+{% block content %}
+
+<style>
+    .errorlist {
+        margin-bottom: 4px;
+        padding: 0px;
+        list-style-type: none;
+        font-weight: 500;
+        color: red;
+    }
+
+    .nav-add-action {
+        display: flex;
+        justify-content: space-between;
+    }
+    .search-img{
+        display: flex;
+    }
+    .search-img-div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
+    }
+</style>
+
+<div class="pagetitle">
+    <nav class="nav-add-action">
+        <div>
+            <h1>Search Dictionary</h1>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
+                <li class="breadcrumb-item active">Dictionary</li>
+            </ol>
+        </div>
+        <div class="add-action-div">
+
+        </div>
+    </nav>
+</div><!-- End Page Title -->
+{% include 'partials/_messages.html' %}
+<div class=" container" style="display: flex;">
+    <form class="form-group bg-primary  col-12 col-lg-10"  id="search-dictionary-form" style="display: flex;">
+          {{form.search}}
+        <button type="submit" class="btn button-background">Search</button>
+
+    </form>
+</div>
+<div class="container " id="main-container">
+    
+</div>
+
+<script src="{% static 'assets/js/search-dictionary.js' %}"></script>
+
+{% endblock content %}
