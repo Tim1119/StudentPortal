@@ -77,7 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'student_portal.wsgi.application'
 
-
+SITE_ID=1
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 DATABASES = {
