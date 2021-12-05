@@ -1,0 +1,43 @@
+body{
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-content: center;
+    font-family: 'Nunito';
+}
+
+.logo-div{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height:120px;
+    margin-bottom: 30px;
+}
+.logo-text{
+    
+    
+    height:60px;
+    display: flex;
+    align-items: center;
+    width:80%;
+    text-align: center;
+}
+.logo-text h1{
+    padding-left: 10px;
+    color:#4154f1;
+}
+.logo-image{
+    height:60px;
+    display: flex;
+    width: 20%;
+    height:60px !important;
+    justify-content: end;
+}
+.logo-image img{
+  
+    height:inherit !important;
+}
+.btn-div{
+    display: flex;
+    justify-content: flex-end;
+}

@@ -1,0 +1,18 @@
+#showpasswordtoggle{
+    cursor: pointer;
+    transition: all;
+  }
+  #showpasswordtoggle:hover{
+   transform: scale(1.1);
+  }
+  #toggle-password{
+    display: flex;
+    justify-content: end;
+  }
+ul{
+  list-style-type: none;
+  color: red;
+}
+.helptext{
+  display: none;
+}
