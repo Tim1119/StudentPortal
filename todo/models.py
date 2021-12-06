@@ -26,5 +26,4 @@ class Todo(models.Model):
         except ValidationError as e:
             raise ValidationError("Oops, this todo item already exists")
     
-    def all_todo_counts(self):
-        return self.objects.all().count()
+   

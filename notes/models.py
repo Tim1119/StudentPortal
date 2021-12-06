@@ -57,5 +57,4 @@ class Note(models.Model):
         except ValidationError as e:
             raise ValidationError("Oops, note with this title,in this course, belonging to you already exists")
 
-    def all_notes_counts(self):
-        return self.notes.all().count()
+  
