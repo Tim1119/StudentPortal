@@ -36,9 +36,21 @@
                                         <i class="bi bi-journal"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{today_notes}} lds</h6>
-                                        <span class="text-success small pt-1 fw-bold">{{notes_percent_today|floatformat:"-2" }}%</span> <span
-                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        {% if today_notes %}
+                                        <h6>{{today_notes}}</h6>
+                                        {% else %}
+                                        <h6>0</h6>
+                                        {% endif %}
+                                        
+                                        {% if notes_percent_today %}
+                                        <span class="text-success small pt-1 fw-bold">
+                                            {{notes_percent_today|floatformat:"-2" }}%</span>
+                                          {% else %}
+                                          <span class="text-success small pt-1 fw-bold">
+                                            0%</span>
+                                        {% endif %}
+                                       
+                                        <span class="text-muted small pt-2 ps-1">increase</span>
 
                                     </div>
                                 </div>
@@ -60,8 +72,16 @@
                                         <i class="bi bi-journal"></i>
                                     </div>
                                     <div class="ps-3">
+                                        {% if month_notes %}
                                         <h6>{{month_notes}}</h6>
-                                        <span class="text-success small pt-1 fw-bold">{{notes_percent_month|floatformat:"-2" }}%</span> <span
+                                        {% else %}<h6>0</h6>
+                                        {% endif %}
+                                        {% if notes_percent_month  %}
+                                        <span class="text-success small pt-1 fw-bold">{{notes_percent_month|floatformat:"-2" }}%</span>
+                                        {% else %}
+                                        <span class="text-success small pt-1 fw-bold">0%</span>
+                                        {% endif %}
+                                         <span
                                             class="text-muted small pt-2 ps-1"></span>
 
                                     </div>
@@ -93,7 +113,12 @@
                                         <i class="bi bi-check2-circle"></i>
                                     </div>
                                     <div class="ps-3">
+                                        {% if todo_count %}
                                         <h6>{{todo_count}}</h6>
+                                        {% else %}
+                                        <h6>0/h6>
+                                        {% endif %}
+                                       
                                         <span class="text-success small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">increase</span>
 
