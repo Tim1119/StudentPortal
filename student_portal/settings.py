@@ -16,7 +16,7 @@ environ.Env.read_env()
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = ['digi-students.herokuapp.com','*']
+ALLOWED_HOSTS = ['digi-students.herokuapp.com']
 
 #'digi-students.herokuapp.com','*'
 # Application definition
