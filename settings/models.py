@@ -7,3 +7,10 @@ class UserPreferences(models.Model):
 
     def __str__(self):
         return str(self.user) + str(self.currency)
+    
+    class Meta:
+            
+        verbose_name = 'UserPreference'
+        verbose_name_plural = 'UserPreference'
+    
+    

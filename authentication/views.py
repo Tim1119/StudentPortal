@@ -16,14 +16,24 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from todo.models import Todo
 from notes.models import Note
-import pdb
-import datetime
+import pdb,threading,datetime
 from django.utils import timezone
 
 
 
 
 # Create your views here.
+# Create your views here.
+class EmailThread(threading.Thread):
+    
+    def __init__(self,email):
+        self.email = email
+        threading.Thread.__init__(self)
+        
+    def run(self):
+        self.email.send(fail_silently=False)
+
+
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 @login_required
 def HomeView(request):
@@ -82,7 +92,8 @@ class RegisterUserView(CreateView):
             activate_url = 'http://'+domain+link
             email_body = 'Hi' + first_name + last_name +' please use this link to verify your account\n' + activate_url
             send_email = EmailMessage(email_subject,email_body,'noreply@emicolon.com',[email])
-            send_email.send()
+            #send_email.send()
+            EmailThread(send_email).start()
             messages.success(request,'account succesfully created. check your email to activate account')
             return redirect('authentication:login')
         else:
@@ -165,10 +176,6 @@ class RequestPasswordResetView(View):
             email = form.cleaned_data['email']
             current_site = get_current_site(request) 
             user = User.objects.filter(email=email)
-            print(('------'))
-            print(user)
-            print(user)
-            print(('------'))
             if user.exists():
         # get our current site and relative url 
                 uidb64 = urlsafe_base64_encode(force_bytes(user[0].pk))
@@ -182,7 +189,8 @@ class RequestPasswordResetView(View):
                 reset_url = 'http://'+domain+link
                 email_body = 'Hi ' + user[0].username +' please use this link to reset your password\n' + reset_url
                 send_email = EmailMessage(email_subject,email_body,'noreply@semycolon.com',[email])
-                send_email.send()
+                #send_email.send()
+                EmailThread(send_email).start()
                 messages.success(request,'we have sent a link to reset your password to your mail')
                 return redirect('authentication:login')
             
