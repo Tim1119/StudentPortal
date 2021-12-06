@@ -43,14 +43,14 @@ def HomeView(request):
     try:
         notes_percent_today = today_notes/month_notes * 100
         notes_percent_month = month_notes/int(Note.objects.all().count()) * 100
-        today_todo = Todo.objects.all().filter(created__gte=timezone.now() - datetime.timedelta(days=1),owner=request.user.profile).count()
+       # today_todo = Todo.objects.all().filter(created__gte=timezone.now() - datetime.timedelta(days=1),owner=request.user.profile).count()
     except Exception as e:
         pass 
     #today_notes = Note.objects.get(id=6)
     
     
     context={
-        'todo_count':today_todo,
+        #'todo_count':today_todo,
         'today_notes':today_notes,
         'month_notes':month_notes,
         'notes_percent_today':notes_percent_today,
