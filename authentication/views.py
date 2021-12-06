@@ -50,7 +50,7 @@ def HomeView(request):
     
     
     context={
-        #'todo_count':today_todo,
+     
         'today_notes':today_notes,
         'month_notes':month_notes,
         'notes_percent_today':notes_percent_today,
