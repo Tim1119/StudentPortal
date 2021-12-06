@@ -37,10 +37,10 @@ class EmailThread(threading.Thread):
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 @login_required
 def HomeView(request):
-    today_notes = Note.objects.filter(created__gte=timezone.now() - datetime.timedelta(days=1),profile=request.user.profile).count()
-    month_notes = Note.objects.filter(created__gte=timezone.now() - datetime.timedelta(days=30),profile=request.user.profile).count()
-    
+   
     try:
+        today_notes = Note.objects.filter(created__gte=timezone.now() - datetime.timedelta(days=1),profile=request.user.profile).count()
+        month_notes = Note.objects.filter(created__gte=timezone.now() - datetime.timedelta(days=30),profile=request.user.profile).count()
         notes_percent_today = today_notes/month_notes * 100
         notes_percent_month = month_notes/int(Note.objects.all().count()) * 100
         today_todo = Todo.objects.all().filter(created__gte=timezone.now() - datetime.timedelta(days=1),owner=request.user.profile).count()
@@ -52,7 +52,7 @@ def HomeView(request):
         'notes_percent_today':notes_percent_today,
         'notes_percent_month':notes_percent_month
     }
-    except Exception as e:
+    except ZeroDivisionError as e:
         context={}
     #today_notes = Note.objects.get(id=6)
     
