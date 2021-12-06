@@ -6,11 +6,114 @@
     <h1>Home</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'authentication:home' %}">Home</a></li>
-            <li class="breadcrumb-item active"> Settings </li>
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+            <li class="breadcrumb-item active"> Welcome </li>
         </ol>
     </nav>
+
+
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="mt-3 mb-3">
+                        <b><h3>Notes</h3></b>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">Notes Created <span>| Today</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-journal"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{today_notes}} lds</h6>
+                                        <span class="text-success small pt-1 fw-bold">{{notes_percent_today|floatformat:"-2" }}%</span> <span
+                                            class="text-muted small pt-2 ps-1">increase</span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Sales Card -->
+
+                    <!-- Revenue Card -->
+                    <div class="col-xxl-6 col-md-6">
+                        <div class="card info-card revenue-card">
+
+                            <div class="card-body">
+                                <h5 class="card-title">Notes Created <span>| This Month</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-journal"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{month_notes}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">{{notes_percent_month|floatformat:"-2" }}%</span> <span
+                                            class="text-muted small pt-2 ps-1"></span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Revenue Card -->
+
+                </div>
+            </div>
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Sales Card -->
+                    <div class="mt-3 mb-3">
+                        <h3>Todo</h3>
+                    </div>
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">Todo Created <span>| Today</span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div
+                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-check2-circle"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6>{{todo_count}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                            class="text-muted small pt-2 ps-1">increase</span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- End Sales Card -->
+
+                    
+
+                </div>
+            </div>
+        </div>
+    </section>
+
 </div><!-- End Page Title -->
+
+
 {% include 'partials/_messages.html' %}
 
 {% endblock content %}

@@ -5,14 +5,17 @@ from .forms import BookForm
 import requests
 from django.http import JsonResponse
 import json
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-class BookView(View):
+class BookView(LoginRequiredMixin,View):
     
     def get(self,request,*args, **kwargs):
         form = BookForm()
         return render(request,'book.html',{'form':form})
-    
+
+@login_required
 @require_http_methods('POST')
 def SearchBookView(request):
     """Search Book for user data"""

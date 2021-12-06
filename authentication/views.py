@@ -14,8 +14,38 @@ from django.utils.http import urlsafe_base64_decode,urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from todo.models import Todo
+from notes.models import Note
 import pdb
+import datetime
+from django.utils import timezone
+
+
+
+
 # Create your views here.
+@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@login_required
+def HomeView(request):
+    today_notes = Note.objects.filter(created__gte=timezone.now() - datetime.timedelta(days=1),profile=request.user.profile).count()
+    month_notes = Note.objects.filter(created__gte=timezone.now() - datetime.timedelta(days=30),profile=request.user.profile).count()
+    notes_percent_today = today_notes/month_notes * 100
+    notes_percent_month = month_notes/Note.objects.all().count() * 100
+    #today_notes = Note.objects.get(id=6)
+    
+    today_todo = Todo.objects.all().filter(created__gte=timezone.now() - datetime.timedelta(days=1),owner=request.user.profile).count()
+    context={
+        'todo_count':today_todo,
+        'today_notes':today_notes,
+        'month_notes':month_notes,
+        'notes_percent_today':notes_percent_today,
+        'notes_percent_month':notes_percent_month
+    }
+    return render(request,'index.html',context)
+
+
+
+
 
 
 class RegisterUserView(CreateView):
@@ -77,7 +107,7 @@ class LoginUser(LoginView):
                 if user.is_active:
                     login(request,user)
                     messages.success(request,'Welcome, '+user.username+'you are now logged in')
-                    return redirect('authentication:home')
+                    return redirect('home')
                 else:
                     messages.error(request,'sorry, your account is not active.please check your email')
                     return redirect('authentication:login')
@@ -88,14 +118,11 @@ class LoginUser(LoginView):
             messages.error(request,'please fill all fields')
             return redirect('authentication:login')
     
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+
+
+
+
 @login_required
-def HomeView(request):
-    return render(request,'index.html')  
-
-
-
-
 def UserLogoutView(request):
         
     logout(request)

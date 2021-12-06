@@ -11,9 +11,8 @@ from django.urls import reverse_lazy,reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.decorators.http import require_http_methods
 from settings.models import UserPreferences
+from django.contrib.auth.decorators import login_required
 import datetime,csv,json
-
-
 # Create your views here.
   
 class ExpenseView(LoginRequiredMixin,ListView):
@@ -107,7 +106,7 @@ class DeleteExpenseView(LoginRequiredMixin,DeleteView):
         return obj
 
 
-
+@login_required
 @require_http_methods('POST')
 def SearchExpenses(request):
     """This view helps user to search for expense by category"""
@@ -117,7 +116,7 @@ def SearchExpenses(request):
     data = expenses.values()
     return JsonResponse(list(data), safe=False)
     
-    
+@login_required
 @require_http_methods('POST')   
 def expense_category_summary_json(request):
     """Generates expense total amount based on category for expense summary page by default"""
@@ -134,11 +133,11 @@ def expense_category_summary_json(request):
     return JsonResponse({'expense_category_data':finalrep},safe=False)
 
 
-class ViewExpenseSummary(TemplateView):
+class ViewExpenseSummary(LoginRequiredMixin,TemplateView):
     """This is the default view for the expense summary page"""
     template_name = "expense-stats.html" 
 
-
+@login_required
 @require_http_methods('POST') 
 def search_by_date(request):
     """This view helps user to search for expense incurred on a specific date"""
@@ -168,6 +167,7 @@ def search_within_date_range(request):
            finalrep[expense.category.name] = expense.amount
     return JsonResponse({'expense_category_data':finalrep},safe=False)
 
+@login_required
 @require_http_methods('GET')
 def export_csv(request):
     """This view helps user to export expenses data as csv"""
@@ -183,7 +183,7 @@ def export_csv(request):
     return response
 
 
-
+@login_required
 @require_http_methods('GET')
 def export_pdf(request,*args, **kwargs):
     """This view helps users to export expenses data as pdf"""

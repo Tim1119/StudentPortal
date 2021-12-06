@@ -4,7 +4,7 @@ from autoslug import AutoSlugField
 from profiles.models import Profile
 from ckeditor.fields import RichTextField
 from django.core.exceptions import ValidationError
-
+from django.utils import timezone
 
 
 
@@ -40,6 +40,7 @@ class Note(models.Model):
     note_order = models.IntegerField(blank=True,null=True,help_text='leave blank if it has no order')
     content = RichTextField()
     slug = AutoSlugField(populate_from='title',unique_with=['created','profile','course'])
+    #date = models.DateField(default=timezone.now())
     updated =models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -55,3 +56,6 @@ class Note(models.Model):
             super(Note,self).validate_unique()
         except ValidationError as e:
             raise ValidationError("Oops, note with this title,in this course, belonging to you already exists")
+
+    def all_notes_counts(self):
+        return self.notes.all().count()

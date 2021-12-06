@@ -7,13 +7,17 @@ import requests
 from django.http import JsonResponse
 import json
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
-class DictionaryView(View):
+class DictionaryView(LoginRequiredMixin,View):
     
     def get(self,request,*args, **kwargs):
         form = DictionaryForm()
         return render(request,'dictionary.html',{'form':form})
     
+    
+@login_required
 @require_http_methods('POST')
 def SearchDictionaryView(request):
     """Search Dictionary for user data"""
